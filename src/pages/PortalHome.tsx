@@ -20,8 +20,8 @@ export default function PortalHome() {
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight uppercase">
-            El software de agendamiento para <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">Cualquier tipo de Negocio</span>
+            LA SUITE DIGITAL PARA <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">NEGOCIOS QUE RESERVAN, VENDEN Y ATIENDEN</span>
           </h1>
 
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
