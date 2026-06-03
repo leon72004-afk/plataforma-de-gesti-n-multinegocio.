@@ -1,0 +1,6 @@
+{
+  "name": "ReserveFlow SaaS",
+  "description": "Plataforma SaaS multi-tenant de agendamiento inteligente y gestión integral para toda clase de establecimientos de servicios, consultorios y centros de atención profesional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
