@@ -16,7 +16,7 @@ export default function PortalHome() {
         <div className="max-w-5xl mx-auto px-4 relative z-10 text-center space-y-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-bold rounded-full uppercase tracking-wider mx-auto">
             <Sparkles className="h-3.5 w-3.5" />
-            La suite SaaS de reservas, cabinas y bahías definitiva
+            LA SUITE MULTINEGOCIO PARA RESERVAS, PEDIDOS Y SERVICIOS
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight uppercase">
@@ -25,17 +25,17 @@ export default function PortalHome() {
           </h1>
 
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-            Optimiza bahías de trabajo, cabinas, consultorios o canchas. Administra tu personal de especialistas, habilita reservas en tiempo real 24/7 y genera métricas en un portal multi-tenant premium.
+            Crea tiendas para restaurantes, barberías, salones, hoteles, educación, domicilios y más. Administra disponibilidad, reservas, pedidos, clientes, personal y métricas desde un solo portal multi-negocio.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <Link to="/login?register=true" className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black rounded-2xl shadow-xl shadow-orange-500/25 hover:opacity-90 active:transform active:scale-95 transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
-              Crear mi Negocio Gratis
+              CREAR MI NEGOCIO GRATIS
               <ArrowRight className="h-5 w-5" />
             </Link>
             <Link to="/explorar" className="px-6 py-4 bg-[#1E293B]/60 hover:bg-[#1E293B] font-semibold border border-[#334155] rounded-2xl transition text-sm flex items-center gap-1.5 uppercase tracking-wider">
               <Car className="h-4.5 w-4.5 text-orange-500" />
-              Explorar Tiendas Aliadas
+              EXPLORAR NEGOCIOS DISPONIBLES
             </Link>
           </div>
         </div>
