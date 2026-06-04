@@ -1489,8 +1489,8 @@ const app = express();
   api.post('/leads', async (req, res) => {
     try {
       const { name, email, phone, businessName, city, washesPerDay, baysCount, licenseTier, additionalNotes } = req.body;
-      if (!name || !email || !phone || !businessName || !city) {
-        return res.status(400).json({ error: 'Nombre, Email, Teléfono, Ciudad y Nombre de Negocio son obligatorios.' });
+      if (!name || !email || !phone) {
+        return res.status(400).json({ error: 'Nombre, Email y Teléfono son obligatorios.' });
       }
 
       const lead = await prisma.lead.create({

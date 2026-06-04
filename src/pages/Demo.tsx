@@ -4,6 +4,7 @@ import { ArrowLeft, Play, RotateCcw, MessageCircle, Bot, MapPin, Headphones, Bar
 import { MONEDAS, SECTORS, FLOWS, FALLBACKS } from '../data/demoData';
 import type { Moneda, Sector, Tipo, DemoFlow, DemoMsg } from '../types/demo';
 import Navbar from '../components/Navbar';
+import api from '../lib/api';
 
 function fmtM(val: number, mon: Moneda) {
   return new Intl.NumberFormat(mon.locale, { style: 'currency', currency: mon.code, minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(val * mon.mult);
@@ -106,6 +107,7 @@ export default function Demo() {
   const [leadEmail, setLeadEmail] = useState('');
   const [leadPhone, setLeadPhone] = useState('');
   const [leadSent, setLeadSent] = useState(false);
+  const [leadSubmitting, setLeadSubmitting] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -229,9 +231,24 @@ export default function Demo() {
     return sector.id + '-' + tipo.id;
   }
 
-  function handleLeadSubmit(e: FormEvent) {
+  async function handleLeadSubmit(e: FormEvent) {
     e.preventDefault();
-    setLeadSent(true);
+    setLeadSubmitting(true);
+    try {
+      await api.post('/leads', {
+        name: leadName,
+        email: leadEmail,
+        phone: leadPhone,
+        businessName: 'Demo AVA - ' + (sector?.nm || ''),
+        city: 'N/A',
+        additionalNotes: 'Demo completado: ' + (sector?.nm || '') + ' - ' + (tipo?.nm || '')
+      });
+      setLeadSent(true);
+    } catch (err: any) {
+      console.error('Lead submission error:', err);
+    } finally {
+      setLeadSubmitting(false);
+    }
   }
 
   let opsHtml = '';
@@ -602,9 +619,9 @@ export default function Demo() {
                     className="w-full px-3.5 py-2.5 border border-[#334155] rounded-xl bg-[#090D16] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500 transition-all" />
                   <input type="tel" value={leadPhone} onChange={e => setLeadPhone(e.target.value)} placeholder="Celular *" required
                     className="w-full px-3.5 py-2.5 border border-[#334155] rounded-xl bg-[#090D16] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500 transition-all" />
-                  <button type="submit"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white font-black text-sm uppercase tracking-[1px] cursor-pointer transition-all hover:-translate-y-0.5 shadow-lg shadow-orange-500/20">
-                    Enviar
+                  <button type="submit" disabled={leadSubmitting}
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white font-black text-sm uppercase tracking-[1px] cursor-pointer transition-all hover:-translate-y-0.5 shadow-lg shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                    {leadSubmitting ? 'Enviando...' : 'Enviar'}
                   </button>
                 </form>
                 <button onClick={() => setShowLeadModal(false)}
