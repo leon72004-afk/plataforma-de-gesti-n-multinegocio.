@@ -525,7 +525,7 @@ export default function Demo() {
               </div>
             </div>
 
-            <div className="flex-1 min-w-0 bg-[#090D16] flex flex-col">
+            <div className={`${tab === 'dash' ? 'hidden' : 'flex-1 min-w-0'} bg-[#090D16] flex flex-col`}>
               <div className="h-9 flex-shrink-0 bg-[#0F172A] border-b border-[#1E293B] flex items-center px-3.5 gap-2">
                 <div className="font-bold text-[10.5px] tracking-[1.4px] uppercase text-gray-500">
                   {tab === 'panel' ? '⚙️ ' + flow.c2 : '📊 ' + flow.c3}
@@ -566,13 +566,13 @@ export default function Demo() {
               </div>
             </div>
 
-            <div className={`flex-[0_0_292px] bg-[#090D16] flex-col border-l border-[#1E293B] lg:flex ${tab === 'dash' ? 'hidden' : 'flex'}`}>
+            <div className={`${tab === 'dash' ? 'flex-1' : 'flex-[0_0_292px]'} bg-[#090D16] flex-col border-l border-[#1E293B] lg:flex flex`}>
               <div className="h-9 flex-shrink-0 bg-[#0F172A] border-b border-[#1E293B] flex items-center px-3.5 gap-2">
                 <div className="font-bold text-[10.5px] tracking-[1.4px] uppercase text-gray-500">📊 Dashboard · Métricas</div>
                 <div className="ml-auto"><span className="text-[10px] text-gray-500 font-semibold">AVA · CCG Live</span></div>
               </div>
               <div className="flex-1 min-h-0 overflow-y-auto p-3.5 flex flex-col gap-2.5 whatsapp-scrollbar">
-                <div dangerouslySetInnerHTML={{ __html: col3Content }} />
+                <div dangerouslySetInnerHTML={{ __html: tab === 'dash' ? dashHtml : col3Content }} />
               </div>
             </div>
           </div>
