@@ -324,7 +324,7 @@ export default function Demo() {
   ` : '' : '<div class="text-center py-6 text-gray-500 text-[13px] border border-dashed border-[#1E293B] rounded-xl">Inicia el demo para ver métricas en tiempo real.</div>';
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-[#E2E8F0] font-sans flex flex-col selection:bg-orange-500 selection:text-white">
+    <div className="h-dvh bg-[#090D16] text-[#E2E8F0] font-sans flex flex-col overflow-hidden selection:bg-orange-500 selection:text-white">
       <Navbar />
 
       {screen === 'setup' && (
