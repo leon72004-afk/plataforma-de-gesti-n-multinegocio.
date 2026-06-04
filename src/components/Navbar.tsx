@@ -16,8 +16,7 @@ export default function Navbar() {
   const menuItems = [
     { label: 'Inicio', target: '/' },
     { label: 'Explorar Negocios', target: '/explorar' },
-    { label: 'Crear mi Negocio', target: '/login?register=true' },
-    { label: 'Demo AVA', target: '/demo' },
+    { label: 'Crear mi Demo', target: '/demo' },
     { label: 'Contacto', target: '/contacto' },
   ];
 

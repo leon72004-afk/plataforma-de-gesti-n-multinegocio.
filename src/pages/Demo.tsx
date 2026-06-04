@@ -305,7 +305,7 @@ export default function Demo() {
 
             <div className="text-center mb-8">
               <h1 className="font-black text-4xl uppercase tracking-[-.3px] leading-tight mb-2 text-white">
-                Configura tu demo en <em className="not-italic text-orange-500">30 segundos</em>
+                Crear mi <em className="not-italic text-orange-500">Demo</em>
               </h1>
               <p className="text-sm text-gray-400 max-w-[560px] mx-auto">Selecciona sector, tipo de conversación y moneda — AVA genera un demo WhatsApp completo con audio, imágenes, PDFs y más.</p>
             </div>
