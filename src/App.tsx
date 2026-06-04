@@ -8,6 +8,7 @@ import ConfirmPage from './pages/ConfirmPage';
 import PortalHome from './pages/PortalHome';
 import Explorar from './pages/Explorar';
 import Contacto from './pages/Contacto';
+import Demo from './pages/Demo';
 import { useState, useEffect } from 'react';
 import api from './lib/api';
 
@@ -48,6 +49,7 @@ export default function App() {
           {/* New Independent SaaS Pages */}
           <Route path="/explorar" element={<Explorar />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/demo" element={<Demo />} />
 
           {/* SaaS Business Owner Login & Onboarding */}
           <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login onLogin={handleLogin} />} />

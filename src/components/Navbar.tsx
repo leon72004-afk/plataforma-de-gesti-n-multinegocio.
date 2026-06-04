@@ -17,6 +17,7 @@ export default function Navbar() {
     { label: 'Inicio', target: '/' },
     { label: 'Explorar Negocios', target: '/explorar' },
     { label: 'Crear mi Negocio', target: '/login?register=true' },
+    { label: 'Demo AVA', target: '/demo' },
     { label: 'Contacto', target: '/contacto' },
   ];
 
