@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Play, RotateCcw, MessageCircle, Bot, MapPin, Headphones, BarChart3, Settings } from 'lucide-react';
 import { MONEDAS, SECTORS, FLOWS, FALLBACKS } from '../data/demoData';
@@ -101,6 +101,11 @@ export default function Demo() {
   const [typingIdx, setTypingIdx] = useState<number | null>(null);
   const [finalized, setFinalized] = useState(false);
   const [feedItems, setFeedItems] = useState<string[]>([]);
+  const [showLeadModal, setShowLeadModal] = useState(false);
+  const [leadName, setLeadName] = useState('');
+  const [leadEmail, setLeadEmail] = useState('');
+  const [leadPhone, setLeadPhone] = useState('');
+  const [leadSent, setLeadSent] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -118,6 +123,13 @@ export default function Demo() {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages, typingIdx]);
+
+  useEffect(() => {
+    if (finalized) {
+      const t = setTimeout(() => setShowLeadModal(true), 1200);
+      return () => clearTimeout(t);
+    }
+  }, [finalized]);
 
   function handleSelectMoneda(m: Moneda) {
     setMoneda(m);
@@ -153,6 +165,8 @@ export default function Demo() {
     setMessages([]);
     setFinalized(false);
     setFeedItems([]);
+    setShowLeadModal(false);
+    setLeadSent(false);
   }
 
   function handleStart() {
@@ -206,11 +220,18 @@ export default function Demo() {
     setMessages([]);
     setFeedItems([]);
     setFinalized(false);
+    setShowLeadModal(false);
+    setLeadSent(false);
   }
 
   function getFlowKey(): string {
     if (!sector || !tipo) return '';
     return sector.id + '-' + tipo.id;
+  }
+
+  function handleLeadSubmit(e: FormEvent) {
+    e.preventDefault();
+    setLeadSent(true);
   }
 
   let opsHtml = '';
@@ -556,6 +577,59 @@ export default function Demo() {
         @keyframes animate-fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fadeIn { animation: animate-fadeIn 0.3s ease-out; }
       `}</style>
+
+      {showLeadModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-[fadeUp_0.25s_ease-out]">
+          <div className="bg-[#0F172A] border border-orange-500/20 rounded-2xl shadow-2xl shadow-orange-500/10 w-full max-w-md mx-4 p-6 animate-[fadeUp_0.3s_ease-out]">
+            {!leadSent ? (
+              <>
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1a2332] to-[#0F172A] flex items-center justify-center border border-orange-500/20">
+                    <Bot className="w-6 h-6 text-orange-400" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-sm text-white">¿Te gustó el demo?</div>
+                    <div className="text-xs text-gray-400">AVA · WhatsApp · CCG</div>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-300 mt-3 mb-5 leading-relaxed">
+                  Déjanos tus datos y pronto nos comunicaremos contigo para mostrarte cómo AVA puede transformar tu negocio.
+                </p>
+                <form onSubmit={handleLeadSubmit} className="flex flex-col gap-3.5">
+                  <input type="text" value={leadName} onChange={e => setLeadName(e.target.value)} placeholder="Nombre completo *" required
+                    className="w-full px-3.5 py-2.5 border border-[#334155] rounded-xl bg-[#090D16] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500 transition-all" />
+                  <input type="email" value={leadEmail} onChange={e => setLeadEmail(e.target.value)} placeholder="Correo electrónico *" required
+                    className="w-full px-3.5 py-2.5 border border-[#334155] rounded-xl bg-[#090D16] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500 transition-all" />
+                  <input type="tel" value={leadPhone} onChange={e => setLeadPhone(e.target.value)} placeholder="Celular *" required
+                    className="w-full px-3.5 py-2.5 border border-[#334155] rounded-xl bg-[#090D16] text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500 transition-all" />
+                  <button type="submit"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white font-black text-sm uppercase tracking-[1px] cursor-pointer transition-all hover:-translate-y-0.5 shadow-lg shadow-orange-500/20">
+                    Enviar
+                  </button>
+                </form>
+                <button onClick={() => setShowLeadModal(false)}
+                  className="w-full mt-2 py-2 text-xs text-gray-500 hover:text-gray-300 uppercase tracking-[1px] font-bold cursor-pointer bg-transparent border-none transition-all">
+                  Cerrar
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="text-center py-4">
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div className="font-bold text-lg text-white mb-1">¡Gracias!</div>
+                  <p className="text-sm text-gray-400">Nos comunicaremos contigo pronto.</p>
+                </div>
+                <button onClick={() => setShowLeadModal(false)}
+                  className="w-full py-2.5 rounded-xl border border-orange-500/30 text-orange-400 font-bold text-xs uppercase tracking-[1px] cursor-pointer hover:bg-orange-500/10 transition-all bg-transparent">
+                  Cerrar
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
